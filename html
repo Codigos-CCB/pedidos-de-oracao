@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos de Oração - CCB</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Pedidos de Oração - CCB</h1>
+        <p>Controle dos pedidos de oração durante os cultos</p>
+    </div>
+    
+    <div class="container">
+        <!-- Enfermidades -->
+        <div class="card">
+            <h2>Enfermidades</h2>
+            <div class="counter" id="sickness-counter">0</div>
+            <div class="buttons">
+                <button class="btn btn-add" onclick="updateCounter('sickness', 1)">Adicionar</button>
+                <button class="btn btn-remove" onclick="updateCounter('sickness', -1)">Remover</button>
+            </div>
+        </div>
+        
+        <!-- Testemunhados -->
+        <div class="card">
+            <h2>Testemunhados</h2>
+            <div class="counter" id="testimony-counter">0</div>
+            <div class="buttons">
+                <button class="btn btn-add" onclick="updateCounter('testimony', 1)">Adicionar</button>
+                <button class="btn btn-remove" onclick="updateCounter('testimony', -1)">Remover</button>
+            </div>
+        </div>
+        
+        <!-- Viagens -->
+        <div class="card">
+            <h2>Viagens</h2>
+            <div class="counter" id="travel-counter">0</div>
+            <div class="buttons">
+                <button class="btn btn-add" onclick="updateCounter('travel', 1)">Adicionar</button>
+                <button class="btn btn-remove" onclick="updateCounter('travel', -1)">Remover</button>
+            </div>
+        </div>
+        
+        <!-- Acidentados -->
+        <div class="card">
+            <h2>Acidentados</h2>
+            <div class="counter" id="accident-counter">0</div>
+            <div class="buttons">
+                <button class="btn btn-add" onclick="updateCounter('accident', 1)">Adicionar</button>
+                <button class="btn btn-remove" onclick="updateCounter('accident', -1)">Remover</button>
+            </div>
+        </div>
+        
+        <!-- Enlutados -->
+        <div class="card">
+            <h2>Enlutados</h2>
+            <div class="counter" id="mourning-counter">0</div>
+            <div class="buttons">
+                <button class="btn btn-add" onclick="updateCounter('mourning', 1)">Adicionar</button>
+                <button class="btn btn-remove" onclick="updateCounter('mourning', -1)">Remover</button>
+            </div>
+        </div>
+    </div>
+    
+    <button class="finish-btn" onclick="showReport()">FINALIZAR</button>
+    
+    <div class="overlay" id="overlay"></div>
+    
+    <div class="report" id="report">
+        <h2>Contagem Final</h2>
+        
+        <div class="report-item">
+            <span>Enfermidades:</span>
+            <span id="report-sickness">0</span>
+        </div>
+        
+        <div class="report-item">
+            <span>Testemunhados:</span>
+            <span id="report-testimony">0</span>
+        </div>
+        
+        <div class="report-item">
+            <span>Viagens:</span>
+            <span id="report-travel">0</span>
+        </div>
+        
+        <div class="report-item">
+            <span>Acidentados:</span>
+            <span id="report-accident">0</span>
+        </div>
+        
+        <div class="report-item">
+            <span>Enlutados:</span>
+            <span id="report-mourning">0</span>
+        </div>
+        
+        <div class="report-total">
+            <span>Total Geral:</span>
+            <span id="report-total">0</span>
+        </div>
+        
+        <button class="back-btn" onclick="hideReport()">Voltar</button>
+    </div>
+
+    <script>
+        // Inicializar contadores
+        let counters = {
+            sickness: 0,
+            testimony: 0,
+            travel: 0,
+            accident: 0,
+            mourning: 0
+        };
+        
+        // Função para atualizar os contadores
+        function updateCounter(type, value) {
+            counters[type] += value;
+            
+            // Não permitir valores negativos
+            if (counters[type] < 0) {
+                counters[type] = 0;
+            }
+            
+            // Atualizar o display
+            document.getElementById(`${type}-counter`).textContent = counters[type];
+        }
+        
+        // Função para mostrar o relatório
+        function showReport() {
+            // Atualizar os valores no relatório
+            document.getElementById('report-sickness').textContent = counters.sickness;
+            document.getElementById('report-testimony').textContent = counters.testimony;
+            document.getElementById('report-travel').textContent = counters.travel;
+            document.getElementById('report-accident').textContent = counters.accident;
+            document.getElementById('report-mourning').textContent = counters.mourning;
+            
+            // Calcular e exibir o total geral
+            const total = counters.sickness + counters.testimony + counters.travel + 
+                         counters.accident + counters.mourning;
+            document.getElementById('report-total').textContent = total;
+            
+            // Mostrar o relatório e o overlay
+            document.getElementById('report').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+        
+        // Função para esconder o relatório
+        function hideReport() {
+            document.getElementById('report').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
